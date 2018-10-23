@@ -9,6 +9,10 @@ describe Bookmark do
     expect(bookmark.view).to include "www.makersacademy.com"
   end
 
-  
+  it 'adds a new bookmark' do
+    bookmark = Bookmark.create
+    bookmark.add('www.bbc.com')
+    expect(bookmark.view).to include 'www.bbc.com'
+  end
 
 end
