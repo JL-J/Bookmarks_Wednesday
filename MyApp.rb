@@ -5,6 +5,7 @@ class MyApp < Sinatra::Base
 
   get '/' do
     "Bookmark page"
+    erb :homepage
   end
 
   get '/bookmarks' do
