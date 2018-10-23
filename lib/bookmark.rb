@@ -3,13 +3,16 @@ require 'pg'
 class Bookmark
 
   def initialize
-    @bookmarks = { 'bookmark' =>'www.bookmark.com', 'google' => 'www.google.com'}
   end
 
   def view
+    if ENV['RACK_ENV'] == 'test'
+      con = PG.connect :dbname => "bookmark_manager_test"
+    else
       con = PG.connect :dbname => "bookmark"
-      rs = con.exec 'SELECT url FROM bookmarks'
-      rs.map { |e| e["url"] }.join(' ')
+    end
+    rs = con.exec 'SELECT url FROM bookmarks'
+    rs.map { |e| e["url"] }.join(' ')
   end
 
   def self.create
