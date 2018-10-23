@@ -3,12 +3,15 @@ require './lib/bookmark'
 
 class MyApp < Sinatra::Base
 
+  before do
+    @bookmark = Bookmark.create
+  end
+
   get '/' do
     erb :homepage
   end
 
   get '/bookmarks' do
-    @bookmark = Bookmark.create
     @sites = @bookmark.view
     erb :bookmark
   end
@@ -18,7 +21,6 @@ class MyApp < Sinatra::Base
   end
 
   post '/add_bookmark'  do
-    @bookmark = Bookmark.create
     @bookmark.add(params[:url])
     redirect '/new_bookmark'
   end
