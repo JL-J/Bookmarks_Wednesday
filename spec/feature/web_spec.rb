@@ -6,26 +6,20 @@ feature 'index page' do
 
   scenario 'views bookmarks' do
     connection = PG.connect(dbname: 'bookmark_manager_test')
-    connection.exec("INSERT INTO bookmarks (url) VALUES ('www.makersacademy.com');")
-        connection.exec("INSERT INTO bookmarks (url) VALUES ('www.bookmark.com');")
+    connection.exec("INSERT INTO bookmarks (url, title) VALUES ('www.makersacademy.com', 'Makers Academy');")
     visit '/bookmarks'
-    expect(page).to have_content ('www.bookmark.com')
-  end
-
-  scenario 'allows user to add a bookmark and recieve confirmation' do
-    visit '/'
-    click_button 'Add bookmark'
-    fill_in('url', with: 'www.github.com' )
-    click_button 'submit'
-    expect(page).to have_content 'You have added a bookmark'
+    expect(page).to have_content ('www.makersacademy.com')
+    expect(page).to have_content ('Makers Academy')
   end
 
   scenario 'allows user to add a bookmark and then view it in bookmarks page' do
     visit '/'
     click_button 'Add bookmark'
     fill_in('url', with: 'www.bbc.com' )
+    fill_in('title', with: 'BBC' )
     click_button 'submit'
     click_button 'view all'
     expect(page).to have_content ('www.bbc.com')
+    expect(page).to have_content ('BBC')
   end
 end

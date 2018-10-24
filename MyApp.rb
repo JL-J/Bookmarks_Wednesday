@@ -21,7 +21,7 @@ class MyApp < Sinatra::Base
   end
 
   post '/add_bookmark'  do
-    @bookmark.add(params[:url])
+    @bookmark.add(params[:url], params[:title])
     redirect '/new_bookmark'
   end
 

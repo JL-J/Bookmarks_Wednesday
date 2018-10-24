@@ -8,13 +8,15 @@ class Bookmark
 
   def view
     con = connect_to_database
-    rs = con.exec 'SELECT url FROM bookmarks'
-    rs.map { |e| e["url"] }.join(' ')
+    rs = con.exec 'SELECT url, title FROM bookmarks'
+    rs.map do  |bookmark|
+      "#{bookmark['title']}: #{bookmark['url']}"
+    end.join("")
   end
 
-  def add(url)
+  def add(url, title)
     con = connect_to_database
-    con.exec "INSERT INTO bookmarks (url) VALUES ('#{url}');"
+    con.exec "INSERT INTO bookmarks (url, title) VALUES ('#{url}', '#{title}');"
   end
 
   private
