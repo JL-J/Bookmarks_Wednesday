@@ -22,4 +22,14 @@ feature 'index page' do
     expect(page).to have_content ('www.bbc.com')
     expect(page).to have_content ('BBC')
   end
+
+  scenario 'allows the user to delete a bookmark' do
+    connection = PG.connect(dbname: 'bookmark_manager_test')
+    connection.exec("INSERT INTO bookmarks (url, title) VALUES ('www.makersacademy.com', 'Makers Academy');")
+    visit '/'
+    click_button 'Delete bookmark'
+    fill_in('title', with: 'Makers Academy')
+    click_button 'submit'
+    expect(page).to have_content 'You have deleted a bookmark'
+  end
 end

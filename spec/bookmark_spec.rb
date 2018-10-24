@@ -17,4 +17,11 @@ describe Bookmark do
     expect(bookmark.view).to include 'BBC'
   end
 
+  it 'removes a bookmark' do
+    bookmark = Bookmark.create
+    bookmark.add('www.bbc.com', 'BBC')
+    bookmark.remove('BBC')
+    expect(bookmark.view).not_to include 'BBC'
+  end
+
 end

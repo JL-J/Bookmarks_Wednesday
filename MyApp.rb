@@ -29,6 +29,19 @@ class MyApp < Sinatra::Base
     erb :new_bookmark
   end
 
+  get '/delete_bookmark' do
+    erb :delete_bookmark
+  end
+
+  post '/delete_bookmark' do
+    @bookmark.remove(params[:title])
+    redirect '/deleted_bookmark'
+  end
+
+  get '/deleted_bookmark' do
+    erb :deleted_bookmark
+  end
+
   run! if app_file == $0
 
 end
