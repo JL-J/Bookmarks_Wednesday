@@ -3,7 +3,6 @@ require 'bookmark'
 describe Bookmark do
   it 'returns a list of bookmarks' do
     connection = PG.connect(dbname: 'bookmark_manager_test')
-
     connection.exec("INSERT INTO bookmarks (url, title) VALUES ('www.makersacademy.com', 'Makers Academy');")
     bookmark = Bookmark.create
     expect(bookmark.view).to include "www.makersacademy.com"
@@ -22,6 +21,15 @@ describe Bookmark do
     bookmark.add('www.bbc.com', 'BBC')
     bookmark.remove('BBC')
     expect(bookmark.view).not_to include 'BBC'
+  end
+
+  it 'edits a bookmark' do
+    connection = PG.connect(dbname: 'bookmark_manager_test')
+    connection.exec("INSERT INTO bookmarks (url, title) VALUES ('www.facebook.com', 'Facebook');")
+    bookmark = Bookmark.create
+    bookmark.edit('Facebook', 'Twitter', 'www.twitter.com')
+    expect(bookmark.view).not_to include 'Facebook'
+    expect(bookmark.view).to include 'Twitter'
   end
 
 end

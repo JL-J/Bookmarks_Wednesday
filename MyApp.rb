@@ -8,12 +8,8 @@ class MyApp < Sinatra::Base
   end
 
   get '/' do
-    erb :homepage
-  end
-
-  get '/bookmarks' do
     @sites = @bookmark.view
-    erb :bookmark
+    erb :homepage
   end
 
   get '/add_bookmark' do
@@ -22,7 +18,7 @@ class MyApp < Sinatra::Base
 
   post '/add_bookmark'  do
     @bookmark.add(params[:url], params[:title])
-    redirect '/new_bookmark'
+    redirect '/'
   end
 
   get '/new_bookmark' do
@@ -35,11 +31,16 @@ class MyApp < Sinatra::Base
 
   post '/delete_bookmark' do
     @bookmark.remove(params[:title])
-    redirect '/deleted_bookmark'
+    redirect '/'
   end
 
-  get '/deleted_bookmark' do
-    erb :deleted_bookmark
+  get '/edit_bookmark' do
+    erb :edit_bookmark
+  end
+
+  post '/edit_bookmark' do
+    @bookmark.edit(params[:current_title], params[:new_title], params[:new_url])
+    redirect '/'
   end
 
   run! if app_file == $0

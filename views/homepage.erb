@@ -1,11 +1,7 @@
 <div>
   <h1>Bookmark page </h1>
 </div>
-<div>
-  <form method=get action='/bookmarks'>
-  <input type=submit value='view all'>
-</form>
-</div>
+<div><h1> <%= @sites %> </h1></div>
 <div>
   <form method=get action='/add_bookmark'>
   <input type=submit value='Add bookmark'>
@@ -14,5 +10,10 @@
 <div>
   <form method=get action='/delete_bookmark'>
   <input type=submit value='Delete bookmark'>
+</form>
+</div>
+<div>
+  <form method=get action='/edit_bookmark'>
+  <input type=submit value='Edit bookmark'>
 </form>
 </div>

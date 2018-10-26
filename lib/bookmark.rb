@@ -24,6 +24,11 @@ class Bookmark
     con.exec "DELETE FROM bookmarks WHERE title='#{title}';"
   end
 
+  def edit(current_title, new_title, new_url)
+    con = connect_to_database
+    con.exec "UPDATE bookmarks SET title = '#{new_title}', url = '#{new_url}' WHERE title='#{current_title}';"
+  end
+
   private
 
   def connect_to_database
